@@ -1,0 +1,861 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Grade 9 Game Production: Project Management">
+  <title>Game Production - Project Management</title>
+
+  <style>
+    :root {
+      --rust: #A64B2A;
+      --dark-rust: #71331F;
+      --cream: #FFF8EE;
+      --paper: #FFFFFF;
+      --sand: #F3E3D3;
+      --text: #33251F;
+      --muted: #68564C;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    header {
+      background: var(--rust);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      border-bottom: 8px solid var(--dark-rust);
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+    }
+
+    header p {
+      max-width: 750px;
+      margin: auto;
+      font-size: 1.1rem;
+    }
+
+    nav {
+      background: var(--dark-rust);
+      padding: 12px;
+      text-align: center;
+    }
+
+    nav a {
+      display: inline-block;
+      color: white;
+      text-decoration: none;
+      margin: 5px 10px;
+      font-weight: bold;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      text-decoration: underline;
+    }
+
+    main {
+      width: min(1100px, 94%);
+      margin: 25px auto;
+    }
+
+    .frame {
+      background: var(--paper);
+      border: 3px solid var(--rust);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 10px rgba(80, 40, 20, 0.08);
+    }
+
+    .frame h2 {
+      color: var(--dark-rust);
+      border-bottom: 2px solid var(--sand);
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+
+    .frame h3 {
+      color: var(--rust);
+      margin-bottom: 5px;
+    }
+
+    .highlight {
+      background: var(--cream);
+      border-left: 5px solid var(--rust);
+      padding: 14px;
+      margin: 15px 0;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .mini-card {
+      border: 2px solid var(--sand);
+      border-radius: 10px;
+      padding: 16px;
+      background: var(--cream);
+    }
+
+    .mini-card h3 {
+      margin-top: 0;
+    }
+
+    .step-number {
+      display: inline-block;
+      background: var(--rust);
+      color: white;
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      text-align: center;
+      line-height: 34px;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .role {
+      border-left: 5px solid var(--rust);
+      padding: 10px 15px;
+      margin: 12px 0;
+      background: var(--cream);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border: 1px solid #C99B82;
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--rust);
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background: var(--cream);
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 11px;
+      margin-top: 5px;
+      border: 2px solid #C99B82;
+      border-radius: 6px;
+      font: inherit;
+      background: white;
+      color: var(--text);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: 3px solid #E5B99E;
+      border-color: var(--dark-rust);
+    }
+
+    button {
+      background: var(--rust);
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      margin: 12px 8px 0 0;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: var(--dark-rust);
+    }
+
+    .question {
+      border-bottom: 1px solid var(--sand);
+      padding: 12px 0;
+    }
+
+    .question:last-child {
+      border-bottom: none;
+    }
+
+    .checklist label {
+      font-weight: normal;
+      margin: 10px 0;
+    }
+
+    footer {
+      background: var(--dark-rust);
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 35px;
+    }
+
+    @media (max-width: 600px) {
+      .frame {
+        padding: 17px;
+      }
+
+      nav a {
+        margin: 5px;
+      }
+
+      table {
+        font-size: 0.9rem;
+      }
+
+      th, td {
+        padding: 8px;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      nav, button {
+        display: none;
+      }
+
+      .frame {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🎮 Game Production: Project Management</h1>
+  <p>Grade 9 Game Development | Standard 1</p>
+  <p>Learn how game development teams plan, build, test, and improve games.</p>
+</header>
+
+<nav aria-label="Lesson navigation">
+  <a href="#goals">Learning Goals</a>
+  <a href="#iteration">Iterative Development</a>
+  <a href="#prototype">Prototypes</a>
+  <a href="#team">Team Roles</a>
+  <a href="#management">Project Management</a>
+  <a href="#reflection">Student Activity</a>
+</nav>
+
+<main>
+
+  <!-- FRAME 1: INTRODUCTION -->
+  <section class="frame" id="goals">
+    <h2>Frame 1: Introduction to Game Production</h2>
+
+    <p>
+      Have you ever played a video game and wondered how it was created?
+      Making a video game takes more than a good idea. It requires planning,
+      teamwork, creativity, testing, and problem-solving.
+    </p>
+
+    <p>
+      Game developers work together to turn an idea into a game people can
+      play. Some team members design the game, write code, create artwork,
+      make animations, or develop sounds and music. The team also needs
+      a plan to organize the work and meet deadlines.
+    </p>
+
+    <div class="highlight">
+      <strong>Essential Question:</strong>
+      How do game development teams work together to turn an idea into
+      a playable game?
+    </div>
+
+    <h3>Learning Goals</h3>
+    <ul>
+      <li>Explain iterative development.</li>
+      <li>Create an analog or digital game prototype.</li>
+      <li>Describe the responsibilities of game development team members.</li>
+      <li>Use project management skills to organize tasks, time, and resources.</li>
+    </ul>
+  </section>
+
+  <!-- FRAME 2: ITERATIVE DEVELOPMENT -->
+  <section class="frame" id="iteration">
+    <h2>Frame 2: Understand Iterative Development</h2>
+
+    <p>
+      <strong>Iterative development</strong> is the process of creating
+      something, testing it, and making improvements over time. Developers
+      do not expect a game to be perfect on the first try. Instead, they
+      build a basic version and improve it step by step.
+    </p>
+
+    <div class="card-grid">
+      <div class="mini-card">
+        <h3><span class="step-number">1</span>Plan</h3>
+        <p>Decide what the game will be about and what features are needed.</p>
+      </div>
+
+      <div class="mini-card">
+        <h3><span class="step-number">2</span>Build</h3>
+        <p>Create a basic version of the game or one part of it.</p>
+      </div>
+
+      <div class="mini-card">
+        <h3><span class="step-number">3</span>Test</h3>
+        <p>Play the game to find problems and collect feedback.</p>
+      </div>
+
+      <div class="mini-card">
+        <h3><span class="step-number">4</span>Improve</h3>
+        <p>Fix problems, adjust features, and test the game again.</p>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <strong>Game Example:</strong>
+      Your team creates a platform game. During testing, players discover
+      that the character cannot jump high enough to reach the next platform.
+      The programmer adjusts the jumping code, and the team tests the game again.
+    </div>
+
+    <h3>Why Is Iterative Development Important?</h3>
+    <ul>
+      <li>It helps developers find problems early.</li>
+      <li>It allows teams to use feedback to make improvements.</li>
+      <li>It can save time by testing ideas before completing the entire game.</li>
+      <li>It helps make games more fun and easier to play.</li>
+    </ul>
+
+    <div class="question">
+      <strong>Think About It:</strong>
+      Why should a team test a game before it is completely finished?
+      <textarea id="iterationAnswer" placeholder="Write your answer here..."></textarea>
+    </div>
+  </section>
+
+  <!-- FRAME 3: PROTOTYPES -->
+  <section class="frame" id="prototype">
+    <h2>Frame 3: Create a Game Prototype</h2>
+
+    <p>
+      A <strong>prototype</strong> is an early model of a game. It allows
+      developers to test their ideas before spending time creating the
+      entire game. A prototype does not need finished graphics, music,
+      or every planned feature.
+    </p>
+
+    <div class="card-grid">
+      <div class="mini-card">
+        <h3>✏️ Analog Prototype</h3>
+        <p>An analog prototype is created using physical materials rather
+          than a computer.</p>
+        <ul>
+          <li>Draw a level on paper.</li>
+          <li>Use index cards for characters.</li>
+          <li>Create a board-game version.</li>
+          <li>Sketch a game map or storyboard.</li>
+        </ul>
+      </div>
+
+      <div class="mini-card">
+        <h3>💻 Digital Prototype</h3>
+        <p>A digital prototype is created using a computer or digital tool.</p>
+        <ul>
+          <li>Build a simple game in Scratch.</li>
+          <li>Create a test level in Unity.</li>
+          <li>Make a character that can move and jump.</li>
+          <li>Create a clickable game menu.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <strong>Game Example:</strong>
+      Your team wants to create a maze game. Before programming the maze,
+      you draw it on paper. A classmate tests the maze. If it is too easy
+      or confusing, you change the design. This is an analog prototype.
+    </div>
+
+    <h3>What Should a Prototype Help You Test?</h3>
+    <ul>
+      <li>Are the game rules clear?</li>
+      <li>Can the player complete the challenge?</li>
+      <li>Are the controls easy to understand?</li>
+      <li>Is the game idea interesting or fun?</li>
+      <li>What should be changed or improved?</li>
+    </ul>
+
+    <div class="question">
+      <strong>Quick Check:</strong>
+      If you draw a game level on paper before building it on a computer,
+      what type of prototype are you creating?
+      <select id="prototypeAnswer">
+        <option value="">Choose your answer</option>
+        <option value="analog">Analog prototype</option>
+        <option value="digital">Digital prototype</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- FRAME 4: TEAM ROLES -->
+  <section class="frame" id="team">
+    <h2>Frame 4: Work as a Game Development Team</h2>
+
+    <p>
+      A game development team brings together people with different skills.
+      Each person has responsibilities that help the team create one complete game.
+    </p>
+
+    <div class="role">
+      <h3>🎲 Game Designer</h3>
+      <p>
+        Develops the game idea, rules, goals, characters, and challenges.
+        The designer decides what players will do and how the game should work.
+      </p>
+    </div>
+
+    <div class="role">
+      <h3>💻 Programmer</h3>
+      <p>
+        Writes code that makes the game function, including player movement,
+        scoring, collisions, enemies, and game rules.
+      </p>
+    </div>
+
+    <div class="role">
+      <h3>🎨 Art Director</h3>
+      <p>
+        Guides the game's visual style. They help make sure characters,
+        backgrounds, objects, and artwork look consistent.
+      </p>
+    </div>
+
+    <div class="role">
+      <h3>🏃 Animation Director</h3>
+      <p>
+        Coordinates how characters and objects move, such as running,
+        jumping, attacking, or opening a door.
+      </p>
+    </div>
+
+    <div class="role">
+      <h3>🎵 Audio Designer</h3>
+      <p>
+        Creates or selects music and sound effects that help players
+        understand what is happening in the game.
+      </p>
+    </div>
+
+    <div class="role">
+      <h3>📋 Project Manager</h3>
+      <p>
+        Organizes tasks, tracks deadlines, checks progress, and helps
+        team members communicate and solve problems.
+      </p>
+    </div>
+
+    <div class="highlight">
+      <strong>Remember:</strong>
+      In a small team, one student may have more than one role. Every team
+      member should communicate, complete assigned tasks, and support the group.
+    </div>
+
+    <h3>What Does Good Teamwork Look Like?</h3>
+    <ul>
+      <li>Listening respectfully to other people's ideas.</li>
+      <li>Sharing responsibilities fairly.</li>
+      <li>Giving helpful feedback.</li>
+      <li>Meeting deadlines or communicating when help is needed.</li>
+      <li>Keeping shared files and work organized.</li>
+    </ul>
+
+    <div class="question">
+      <strong>Reflection:</strong>
+      Which game development role interests you most, and why?
+      <textarea id="roleAnswer" placeholder="I am interested in this role because..."></textarea>
+    </div>
+  </section>
+
+  <!-- FRAME 5: PROJECT MANAGEMENT -->
+  <section class="frame" id="management">
+    <h2>Frame 5: Utilize Project Management Skills</h2>
+
+    <p>
+      <strong>Project management</strong> means planning and organizing
+      the work needed to complete a project. It helps a team decide what
+      needs to be done, who will do it, and when tasks should be finished.
+    </p>
+
+    <div class="card-grid">
+      <div class="mini-card">
+        <h3>Planning</h3>
+        <p>Decide what the team wants to create and what steps are needed.</p>
+      </div>
+
+      <div class="mini-card">
+        <h3>Organizing</h3>
+        <p>Keep code, artwork, audio, and documents in the correct folders.</p>
+      </div>
+
+      <div class="mini-card">
+        <h3>Time Management</h3>
+        <p>Use time wisely and complete tasks by their deadlines.</p>
+      </div>
+
+      <div class="mini-card">
+        <h3>Task Assignment</h3>
+        <p>Make sure everyone understands their responsibilities.</p>
+      </div>
+
+      <div class="mini-card">
+        <h3>Communication</h3>
+        <p>Share updates, ask questions, and explain problems.</p>
+      </div>
+
+      <div class="mini-card">
+        <h3>Progress Tracking</h3>
+        <p>Check what is finished and what still needs to be done.</p>
+      </div>
+    </div>
+
+    <h3>Example: Planning a Coin-Collecting Game</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Team Member</th>
+          <th>Goal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Plan the game rules</td>
+          <td>Game Designer</td>
+          <td>Decide how players win.</td>
+        </tr>
+        <tr>
+          <td>Create characters and backgrounds</td>
+          <td>Art Director</td>
+          <td>Establish the visual style.</td>
+        </tr>
+        <tr>
+          <td>Build player movement</td>
+          <td>Programmer</td>
+          <td>Make the character move.</td>
+        </tr>
+        <tr>
+          <td>Plan character animations</td>
+          <td>Animation Director</td>
+          <td>Show running and jumping.</td>
+        </tr>
+        <tr>
+          <td>Add music and sound effects</td>
+          <td>Audio Designer</td>
+          <td>Make game sounds.</td>
+        </tr>
+        <tr>
+          <td>Track tasks and deadlines</td>
+          <td>Project Manager</td>
+          <td>Keep the team organized.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight">
+      <strong>Problem-Solving Example:</strong>
+      If the team falls behind schedule, the project manager can review
+      the task list, find out what is causing the delay, and help the team
+      adjust responsibilities or deadlines.
+    </div>
+  </section>
+
+  <!-- FRAME 6: PUTTING IT TOGETHER -->
+  <section class="frame">
+    <h2>Frame 6: Putting It All Together</h2>
+
+    <p>
+      Project management, teamwork, prototyping, and iterative development
+      work together. Each skill helps the team move from an idea to a playable game.
+    </p>
+
+    <ol>
+      <li><strong>Plan:</strong> Decide on a game idea and set goals.</li>
+      <li><strong>Organize:</strong> Assign team roles and create a schedule.</li>
+      <li><strong>Prototype:</strong> Make an early version of the game.</li>
+      <li><strong>Test:</strong> Play the prototype and collect feedback.</li>
+      <li><strong>Improve:</strong> Fix problems and update the game.</li>
+      <li><strong>Repeat:</strong> Test again until the game meets its goals.</li>
+    </ol>
+
+    <p>
+      For example, your team may create a space adventure game. During
+      testing, players might struggle to avoid obstacles. The designer
+      changes the instructions, the programmer adjusts the controls,
+      and the team tests the updated version.
+    </p>
+
+    <div class="highlight">
+      <strong>Key Takeaway:</strong>
+      Successful game development takes planning, teamwork, testing,
+      communication, and continuous improvement.
+    </div>
+  </section>
+
+  <!-- FRAME 7: KNOWLEDGE CHECK -->
+  <section class="frame" id="quiz">
+    <h2>Frame 7: Check Your Understanding</h2>
+    <p>Choose the best answer for each question, then select Check Answers.</p>
+
+    <form id="quizForm">
+      <div class="question">
+        <p><strong>1. What is iterative development?</strong></p>
+        <label><input type="radio" name="q1" value="a"> Creating a game once without testing.</label>
+        <label><input type="radio" name="q1" value="b"> Building, testing, and improving a game repeatedly.</label>
+        <label><input type="radio" name="q1" value="c"> Only drawing game characters.</label>
+      </div>
+
+      <div class="question">
+        <p><strong>2. Which is an example of an analog prototype?</strong></p>
+        <label><input type="radio" name="q2" value="a"> A paper game level.</label>
+        <label><input type="radio" name="q2" value="b"> A fully coded video game.</label>
+        <label><input type="radio" name="q2" value="c"> A finished soundtrack.</label>
+      </div>
+
+      <div class="question">
+        <p><strong>3. Who helps track deadlines and organize tasks?</strong></p>
+        <label><input type="radio" name="q3" value="a"> Audio Designer.</label>
+        <label><input type="radio" name="q3" value="b"> Animation Director.</label>
+        <label><input type="radio" name="q3" value="c"> Project Manager.</label>
+      </div>
+
+      <div class="question">
+        <p><strong>4. Why should a team test a prototype?</strong></p>
+        <label><input type="radio" name="q4" value="a"> To avoid making changes.</label>
+        <label><input type="radio" name="q4" value="b"> To find problems and improve the game.</label>
+        <label><input type="radio" name="q4" value="c"> To finish without feedback.</label>
+      </div>
+
+      <div class="question">
+        <p><strong>5. What is one benefit of good teamwork?</strong></p>
+        <label><input type="radio" name="q5" value="a"> Team members never need to communicate.</label>
+        <label><input type="radio" name="q5" value="b"> Everyone does the same job.</label>
+        <label><input type="radio" name="q5" value="c"> Team members share responsibilities and solve problems.</label>
+      </div>
+
+      <button type="button" onclick="checkQuiz()">Check Answers</button>
+      <button type="reset" onclick="resetQuiz()">Try Again</button>
+      <p id="quizResult" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <!-- FRAME 8: STUDENT ACTIVITY -->
+  <section class="frame" id="reflection">
+    <h2>Frame 8: Student Game Planning Activity</h2>
+
+    <p>
+      Complete this planning activity to begin designing a game prototype
+      with your team. Your responses can be copied and submitted to your teacher.
+    </p>
+
+    <form id="planningForm">
+      <label for="studentName">Student Name</label>
+      <input type="text" id="studentName" placeholder="Enter your name">
+
+      <label for="gameTitle">1. What is your game idea?</label>
+      <textarea id="gameTitle" placeholder="Describe your game, its goal, and what players will do."></textarea>
+
+      <label for="prototypeType">2. What type of prototype will you create?</label>
+      <select id="prototypeType">
+        <option value="">Select a prototype type</option>
+        <option value="Analog">Analog prototype</option>
+        <option value="Digital">Digital prototype</option>
+      </select>
+
+      <label for="teamRole">3. What will your team role be?</label>
+      <select id="teamRole">
+        <option value="">Select a role</option>
+        <option value="Game Designer">Game Designer</option>
+        <option value="Programmer">Programmer</option>
+        <option value="Art Director">Art Director</option>
+        <option value="Animation Director">Animation Director</option>
+        <option value="Audio Designer">Audio Designer</option>
+        <option value="Project Manager">Project Manager</option>
+      </select>
+
+      <label for="responsibilities">4. What responsibilities will you complete?</label>
+      <textarea id="responsibilities" placeholder="List at least three tasks you will work on."></textarea>
+
+      <label for="teamPlan">5. How will your team stay organized?</label>
+      <textarea id="teamPlan" placeholder="Explain how your team will communicate, assign tasks, and track deadlines."></textarea>
+
+      <label for="testingPlan">6. How will you test and improve your prototype?</label>
+      <textarea id="testingPlan" placeholder="Explain who will test the prototype and what feedback you will look for."></textarea>
+
+      <button type="button" onclick="copyPlan()">Copy My Responses</button>
+      <button type="button" onclick="downloadPlan()">Download My Responses</button>
+      <button type="reset">Clear Form</button>
+
+      <p id="planMessage" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <!-- FRAME 9: SUBMISSION CHECKLIST -->
+  <section class="frame">
+    <h2>Frame 9: Submission Checklist</h2>
+
+    <p>Before submitting your work, make sure you can complete the following checklist.</p>
+
+    <div class="checklist">
+      <label><input type="checkbox"> I can explain iterative development.</label>
+      <label><input type="checkbox"> I can describe the difference between analog and digital prototypes.</label>
+      <label><input type="checkbox"> I can explain the responsibilities of game development team members.</label>
+      <label><input type="checkbox"> I have identified my role and responsibilities.</label>
+      <label><input type="checkbox"> I have described how my team will stay organized.</label>
+      <label><input type="checkbox"> I have explained how my team will test and improve its prototype.</label>
+    </div>
+
+    <div class="highlight">
+      <strong>Success Criteria:</strong>
+      You can explain iterative development, describe how to create a prototype,
+      identify team responsibilities, and use a plan to organize game development.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p><strong>Game Production | Standard 1: Project Management</strong></p>
+  <p>Plan it. Build it. Test it. Improve it.</p>
+</footer>
+
+<script>
+  function checkQuiz() {
+    const answers = {
+      q1: "b",
+      q2: "a",
+      q3: "c",
+      q4: "b",
+      q5: "c"
+    };
+
+    let score = 0;
+    let total = Object.keys(answers).length;
+
+    for (const question in answers) {
+      const selected = document.querySelector(
+        'input[name="' + question + '"]:checked'
+      );
+
+      if (selected && selected.value === answers[question]) {
+        score++;
+      }
+    }
+
+    const result = document.getElementById("quizResult");
+    result.textContent = "You scored " + score + " out of " + total + ".";
+
+    if (score === total) {
+      result.textContent += " Excellent work!";
+    } else {
+      result.textContent += " Review the lesson and try again.";
+    }
+  }
+
+  function resetQuiz() {
+    document.getElementById("quizResult").textContent = "";
+  }
+
+  function getPlanText() {
+    return [
+      "GAME PRODUCTION: STUDENT PLANNING ACTIVITY",
+      "===========================================",
+      "Student Name: " + document.getElementById("studentName").value,
+      "",
+      "1. Game Idea:",
+      document.getElementById("gameTitle").value,
+      "",
+      "2. Prototype Type:",
+      document.getElementById("prototypeType").value,
+      "",
+      "3. Team Role:",
+      document.getElementById("teamRole").value,
+      "",
+      "4. Responsibilities:",
+      document.getElementById("responsibilities").value,
+      "",
+      "5. Team Organization:",
+      document.getElementById("teamPlan").value,
+      "",
+      "6. Testing and Improvement:",
+      document.getElementById("testingPlan").value
+    ].join("\n");
+  }
+
+  async function copyPlan() {
+    const text = getPlanText();
+    const message = document.getElementById("planMessage");
+
+    try {
+      await navigator.clipboard.writeText(text);
+      message.textContent = "Your responses have been copied. Paste them into your assignment.";
+    } catch (error) {
+      message.textContent = "Copying is not available in this browser. Use Download My Responses instead.";
+    }
+  }
+
+  function downloadPlan() {
+    const text = getPlanText();
+    const file = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(file);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "game_production_student_plan.txt";
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+    document.getElementById("planMessage").textContent =
+      "Your response file has been prepared for download.";
+  }
+</script>
+
+</body>
+</html>
